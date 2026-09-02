@@ -1,0 +1,38 @@
+#include<iostream>
+#include<vector>
+#include<set>
+using namespace std;
+int find(vector<int>& l,int node){
+	if(l[node]!=node){
+		l[node]=find(l,l[node]);
+	}
+	return l[node];
+}
+void join(vector<int>& l,int lt,int rt){
+	int llt=find(l,lt);
+	int lrt=find(l,rt);
+	l[lrt]=llt;
+}
+int main(){
+	int n;
+	cin>>n;
+	vector<int> l(n+1,0);
+	for(int i=1;i<=n;i++){
+		l[i]=i;
+	}
+	int m;
+	cin>>m;
+	for(int i=1;i<=m;i++){
+		int lt,rt;
+		cin>>lt>>rt;
+		join(l,lt,rt);
+	}
+	set<int> ul;
+	for(int i=1;i<=n;i++){
+		int v=find(l,i);
+		ul.insert(v);
+		//cout<<v;
+	}
+	cout<<ul.size();
+	return 0;
+}
